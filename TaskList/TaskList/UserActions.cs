@@ -2,7 +2,6 @@
 {
     public enum UserActions
     {
-        Complete,
         Create,
         Display,
         Exit,

@@ -44,7 +44,6 @@ namespace TaskManager
         public static void PrintDirections()
         {
             Console.WriteLine("Use one of the following commands:");
-            Console.WriteLine("Complete <task number> - Marks the specified task as complete");
             Console.WriteLine("Create <task name> - Creates a new task");
             Console.WriteLine("Display - Displays current list of tasks");
             Console.WriteLine("Load <file path> - Loads task list from file.");
