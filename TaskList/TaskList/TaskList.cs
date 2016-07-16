@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace TaskManager
 {
+    [Serializable]
     public class TaskList
     {
         private List<Task> _taskList;

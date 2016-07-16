@@ -38,9 +38,9 @@ namespace TaskManager
                 _storage.Save(saveFileName, list);
                 _fileName = saveFileName;
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Unable to save task data.");
+                Console.WriteLine(string.Format("Unable to save task data. {0}", e.Message));
             }
         }
 
