@@ -88,7 +88,7 @@ namespace TaskListTests
 
                 file.Save("Exception", new TaskList());
 
-                string expected = string.Format("Unable to save task data.{0}", Environment.NewLine);
+                string expected = string.Format("Unable to save task data. Value does not fall within the expected range.{0}", Environment.NewLine);
                 Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
             }
         }

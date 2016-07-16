@@ -21,10 +21,10 @@ namespace TaskManager
             {
                 FileStream readerFileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                 BinaryFormatter formatter = new BinaryFormatter();
-                List<Task> taskList = (List<Task>)(formatter.Deserialize(readerFileStream));
+                TaskList taskList = (TaskList)(formatter.Deserialize(readerFileStream));
 
                 readerFileStream.Close();
-                return new TaskList(taskList);
+                return taskList;
             }
             else
             {
