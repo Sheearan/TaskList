@@ -57,7 +57,7 @@ namespace TaskManager
                 Console.WriteLine(string.Format("Saved file doesn't exist at {0}.", fileName));
                 return new TaskList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("There was a problem loading the file.");
                 return new TaskList();

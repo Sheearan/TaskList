@@ -51,7 +51,7 @@ namespace TaskListTests
         [TestMethod]
         public void LoadStringShouldBeLoadAction()
         {
-            CheckUserAction("Load C:\\TestTaskList", UserActions.Load, "Create string should parse as load action, not {0}");
+            CheckUserAction("Load C:\\TestTaskList", UserActions.Load, "Load string should parse as load action, not {0}");
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace TaskListTests
         [TestMethod]
         public void SaveStringShouldBeSaveAction()
         {
-            CheckUserAction("Save C:\\TestTaskList", UserActions.Save, "Create string should parse as load action, not {0}");
+            CheckUserAction("Save C:\\TestTaskList", UserActions.Save, "Save string should parse as save action, not {0}");
         }
 
         [TestMethod]
@@ -71,6 +71,19 @@ namespace TaskListTests
         {
             CheckArguments("Save C:\\TestTaskList", "C:\\TestTaskList", "Argument should be C:\\TestTaskList, not {0}");
         }
+
+        [TestMethod]
+        public void CompleteStringShouldBeCompleteAction()
+        {
+            CheckUserAction("Complete 0", UserActions.Complete, "Complete string should parse as complete action, not {0}");
+        }
+
+        [TestMethod]
+        public void CompleteStringShouldSetArguments()
+        {
+            CheckArguments("Complete 0", "0", "Argument should be 0, not {0}");
+        }
+
 
         [TestMethod]
         public void OtherStringShouldBeUnknownAction()

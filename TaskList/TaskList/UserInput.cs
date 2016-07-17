@@ -85,6 +85,9 @@ namespace TaskManager
 
             switch (actionType)
             {
+                case "Complete":
+                    _userAction = UserActions.Complete;
+                    return;
                 case "Create":
                     _userAction = UserActions.Create;
                     return;

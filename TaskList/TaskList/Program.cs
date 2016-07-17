@@ -15,6 +15,9 @@ namespace TaskManager
                 input = new UserInput(Console.ReadLine());
                 switch (input.Action)
                 {
+                    case UserActions.Complete:
+                        list.CompleteTask(input.Arguments);
+                        break;
                     case UserActions.Create:
                         list.AddTask(input.Arguments);
                         break;
