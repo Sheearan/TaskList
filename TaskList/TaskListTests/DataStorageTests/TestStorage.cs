@@ -1,7 +1,8 @@
 ﻿using System;
 using TaskManager;
+using TaskManager.DataStorage;
 
-namespace TaskListTests
+namespace TaskManagerTests.DataStorageTests
 {
     internal class TestStorage : IStorage
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TaskManager
+namespace TaskManager.DataStorage
 {
     public class TaskListFile
     {

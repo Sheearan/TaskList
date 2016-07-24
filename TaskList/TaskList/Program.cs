@@ -1,5 +1,4 @@
-﻿using System;
-using TaskManager.UserInterface;
+﻿using TaskManager.UserInterface;
 
 namespace TaskManager
 {

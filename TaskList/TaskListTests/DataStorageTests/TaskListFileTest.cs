@@ -2,8 +2,9 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TaskManager;
+using TaskManager.DataStorage;
 
-namespace TaskListTests
+namespace TaskManagerTests.DataStorageTests
 {
     [TestClass]
     public class TaskListFileTest

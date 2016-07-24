@@ -1,4 +1,4 @@
-﻿namespace TaskManager
+﻿namespace TaskManager.DataStorage
 {
     public interface IStorage
     {

@@ -2,7 +2,7 @@
 using TaskManager;
 using TaskManager.UserInterface;
 
-namespace TaskListTests
+namespace TaskManagerTests.UserInterfaceTests
 {
     [TestClass]
     public class UserInputTest
