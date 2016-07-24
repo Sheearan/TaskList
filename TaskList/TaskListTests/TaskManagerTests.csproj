@@ -59,9 +59,9 @@
     <Compile Include="UserInputTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TaskList\TaskList.csproj">
+    <ProjectReference Include="..\TaskList\TaskManager.csproj">
       <Project>{c5b5d1d1-9609-4bdc-aa0b-dac75a504e4a}</Project>
-      <Name>TaskList</Name>
+      <Name>TaskManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

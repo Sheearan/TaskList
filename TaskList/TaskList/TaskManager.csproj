@@ -51,6 +51,7 @@
     <Compile Include="TaskList.cs" />
     <Compile Include="DataStorage\TaskListFile.cs" />
     <Compile Include="UserActions.cs" />
+    <Compile Include="UserInterface\CommandLineInterface.cs" />
     <Compile Include="UserInterface\UserInput.cs" />
   </ItemGroup>
   <ItemGroup>

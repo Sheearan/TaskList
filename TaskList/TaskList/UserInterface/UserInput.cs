@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaskManager
+namespace TaskManager.UserInterface
 {
     public class UserInput
     {
