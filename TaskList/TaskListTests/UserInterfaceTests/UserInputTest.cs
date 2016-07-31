@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using TaskListTests.UserInterfaceTests;
 using TaskManager;
-using TaskManager.UserInterface;
 
 namespace TaskManagerTests.UserInterfaceTests
 {
@@ -94,14 +95,22 @@ namespace TaskManagerTests.UserInterfaceTests
 
         private void CheckUserAction(string userInput, UserActions expectedAction, string errorMessage)
         {
-            UserInput input = new UserInput(userInput);
-            Assert.AreEqual(expectedAction, input.Action, string.Format(errorMessage, input.Action));
+            List<string> testInputs = new List<string>();
+            testInputs.Add(userInput);
+            TestInputParser testParser = new TestInputParser(testInputs);
+            testParser.GetNextAction();
+
+            Assert.AreEqual(expectedAction, testParser.Action, string.Format(errorMessage, testParser.Action));
         }
 
         private void CheckArguments(string userInput, string expectedArgument, string errorMessage)
         {
-            UserInput input = new UserInput(userInput);
-            Assert.AreEqual(expectedArgument, input.Arguments, string.Format(errorMessage, input.Arguments));
+            List<string> testInputs = new List<string>();
+            testInputs.Add(userInput);
+            TestInputParser testParser = new TestInputParser(testInputs);
+            testParser.GetNextAction();
+
+            Assert.AreEqual(expectedArgument, testParser.Arguments, string.Format(errorMessage, testParser.Arguments));
         }
 
     }

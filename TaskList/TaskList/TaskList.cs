@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace TaskManager
 {
     [Serializable]
-    public class TaskList
+    public class TaskList : ITaskList
     {
         private List<Task> _taskList;
         int _nextTaskId;
@@ -75,6 +75,25 @@ namespace TaskManager
 
             Task desiredTask = _taskList.Find(task => task.TaskId == taskId);
             return desiredTask;
+        }
+
+        public List<Task> GetTasksToDisplay(TaskFilter filter)
+        {
+            switch (filter)
+            {
+                case TaskFilter.Incomplete:
+                    List<Task> incompleteTasks = new List<Task>();
+                    foreach (Task t in _taskList)
+                    {
+                        if (!t.CompletionDate.HasValue)
+                        {
+                            incompleteTasks.Add(t);
+                        }
+                    }
+                    return incompleteTasks;
+                default:
+                    return _taskList;
+            }
         }
     }
 }

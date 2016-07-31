@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TaskManager;
+using System.Collections.Generic;
 
 namespace TaskListTests
 {
@@ -37,40 +38,23 @@ namespace TaskListTests
         }
 
         [TestMethod]
-        public void DisplayShouldDisplayTasks()
+        public void GetTasksToDisplayShouldReturnAllTasks()
         {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
+            TaskList tasks = new TaskList();
+            SetupTaskList(tasks);
+            List<Task> actual = tasks.GetTasksToDisplay(TaskFilter.All);
 
-                TaskList tasks = new TaskList();
-                tasks.AddTask("Test1");
-                tasks.AddTask("Test2");
-
-                tasks.Display();
-
-                string expected = string.Format("0 Test1{0}1 Test2{0}", Environment.NewLine);
-                Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
-            }
+            Assert.AreEqual(2, actual.Count, string.Format("There should be 2 tasks to display, not {0}", actual.Count));
         }
 
         [TestMethod]
-        public void DisplayShouldNotDisplayCompletedTasks()
+        public void GetTasksToDisplayShouldReturnIncompleteTasks()
         {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
+            TaskList tasks = new TaskList();
+            SetupTaskList(tasks);
+            List<Task> actual = tasks.GetTasksToDisplay(TaskFilter.Incomplete);
 
-                TaskList tasks = new TaskList();
-                Task taskToComplete = tasks.AddTask("Test1");
-                tasks.AddTask("Test2");
-                tasks.CompleteTask(taskToComplete.TaskId.ToString());
-
-                tasks.Display();
-
-                string expected = string.Format("1 Test2{0}", Environment.NewLine);
-                Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
-            }
+            Assert.AreEqual(1, actual.Count, string.Format("There should be 1 task to display, not {0}", actual.Count));
         }
 
 
@@ -116,6 +100,11 @@ namespace TaskListTests
             }
         }
 
-        // TODO: Handle task ID that doesn't exist in list as input
+        private static void SetupTaskList(TaskList tasks)
+        {
+            Task firstTask = tasks.AddTask("New Task");
+            Task secondTask = tasks.AddTask("Another Task");
+            tasks.CompleteTask(firstTask.TaskId.ToString());
+        }
     }
 }

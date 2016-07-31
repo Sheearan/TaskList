@@ -2,7 +2,7 @@
 
 namespace TaskManager.UserInterface
 {
-    public class UserInput
+    public class UserInputParser
     {
         private string _userInput { get; set; }
         private string _userArguments { get; set; }
@@ -21,6 +21,13 @@ namespace TaskManager.UserInterface
             }
         }
 
+        public void GetNextAction()
+        {
+            _userArguments = null;
+            _userAction = null;
+            _userInput = GetNextInputLine();
+        }
+
         public string Arguments
         {
             get
@@ -32,24 +39,6 @@ namespace TaskManager.UserInterface
 
                 return _userArguments;
             }
-        }
-
-        public UserInput(string input)
-        {
-            _userInput = input;
-        }
-
-        // This function is not under test.
-        // I decided that there's not really any logic, so it doesn't need to be at this point.
-        public static void PrintDirections()
-        {
-            Console.WriteLine("Use one of the following commands:");
-            Console.WriteLine("Create <task name> - Creates a new task");
-            Console.WriteLine("Display - Displays current list of tasks");
-            Console.WriteLine("Load <file path> - Loads task list from file.");
-            Console.WriteLine("Save <file path> - Saves task list to file");
-            Console.WriteLine("Save - Saves task list to the file it was loaded from or last saved to.");
-            Console.WriteLine("Exit - Saves task list (assuming there's a file to save to) and exits the program");
         }
 
         protected void ParseInput()
@@ -109,6 +98,34 @@ namespace TaskManager.UserInterface
             }
         }
 
+        internal T GetUserSelectionFromEnum<T>(T defaultSelection)
+        {
+            foreach (var value in Enum.GetValues(typeof(T)))
+            {
+                Console.WriteLine(string.Format("{0} - {1}", (int) value, (T) value));
+            }
+
+            string userSelection = GetNextInputLine();
+            try
+            {
+                T enumValue = (T)Enum.Parse(typeof(T), userSelection, true);
+                if (Enum.IsDefined(typeof(T), enumValue))
+                {
+                    return enumValue;
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("Invalid input - defaulting to {0}", defaultSelection));
+                    return defaultSelection;
+                }
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine(string.Format("Invalid input - defaulting to {0}", defaultSelection));
+                return defaultSelection;
+            }
+        } 
+
         private void parseArguments(int indexOfFirstSpace)
         {
             if (indexOfFirstSpace == -1)
@@ -119,6 +136,11 @@ namespace TaskManager.UserInterface
             {
                 _userArguments = _userInput.Substring(indexOfFirstSpace).Trim(' ');
             }
+        }
+
+        protected virtual string GetNextInputLine()
+        {
+            return Console.ReadLine();
         }
     }
 }
