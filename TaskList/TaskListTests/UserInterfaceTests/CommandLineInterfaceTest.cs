@@ -10,6 +10,7 @@ namespace TaskListTests.UserInterfaceTests
     [TestClass]
     public class CommandLineInterfaceTest : CommandLineInterface
     {
+        const string actionOptionsOutput = "Please select which action you'd like to take by entering the corresponding number:{0}0 - Help{0}1 - Create{0}2 - Display{0}3 - Complete{0}4 - Load{0}5 - Save{0}6 - Exit{0}";
         const string displayOptionsOutput = "Please select which tasks you'd like to display by entering the corresponding number:{0}0 - Incomplete{0}1 - All{0}";
         public CommandLineInterfaceTest()
         {
@@ -20,7 +21,8 @@ namespace TaskListTests.UserInterfaceTests
         public void UnknownInputShouldPrintDirections()
         {
             List<string> testInputs = new List<string> { "Meow" };
-            string expected = string.Format("Use one of the following commands:{0}Create <task name> - Creates a new task{0}Complete <task ID number> - Completes a task{0}Display - Displays current list of tasks{0}Load <file path> - Loads task list from file.{0}Save <file path> - Saves task list to file{0}Save - Saves task list to the file it was loaded from or last saved to.{0}Exit - Saves task list (assuming there's a file to save to) and exits the program{0}", Environment.NewLine);
+            string errorString = "Invalid input - defaulting to Help{0}";
+            string expected = string.Format(actionOptionsOutput + errorString, Environment.NewLine);
             RunTest(testInputs, expected);
         }
 
@@ -28,7 +30,7 @@ namespace TaskListTests.UserInterfaceTests
         public void DisplayShouldDisplayTasks()
         {
             List<string> testInputs = new List<string> { "Display", ((int)TaskFilter.All).ToString() };
-            string expected = string.Format(displayOptionsOutput + "0 All1{0}1 All2{0}", Environment.NewLine);
+            string expected = string.Format(actionOptionsOutput + displayOptionsOutput + "0 All1{0}1 All2{0}", Environment.NewLine);
             RunTest(testInputs, expected);
         }
 
@@ -36,7 +38,7 @@ namespace TaskListTests.UserInterfaceTests
         public void DisplayShouldNotDisplayCompletedTasks()
         {
             List<string> testInputs = new List<string> { "Display", ((int)TaskFilter.Incomplete).ToString() };
-            string expected = string.Format(displayOptionsOutput + "0 Incomplete1{0}1 Incomplete2{0}", Environment.NewLine);
+            string expected = string.Format(actionOptionsOutput + displayOptionsOutput + "0 Incomplete1{0}1 Incomplete2{0}", Environment.NewLine);
             RunTest(testInputs, expected); 
         }
 
@@ -45,7 +47,7 @@ namespace TaskListTests.UserInterfaceTests
         {
             List<string> testInputs = new List<string> { "Display", "350" };
             string errorString = "Invalid input - defaulting to All{0}";
-            string expected = string.Format(displayOptionsOutput + errorString + "0 All1{0}1 All2{0}", Environment.NewLine);
+            string expected = string.Format(actionOptionsOutput + displayOptionsOutput + errorString + "0 All1{0}1 All2{0}", Environment.NewLine);
             RunTest(testInputs, expected);
         }
 
@@ -54,7 +56,7 @@ namespace TaskListTests.UserInterfaceTests
         {
             List<string> testInputs = new List<string> { "Display", "Meow" };
             string errorString = "Invalid input - defaulting to All{0}";
-            string expected = string.Format(displayOptionsOutput + errorString + "0 All1{0}1 All2{0}", Environment.NewLine);
+            string expected = string.Format(actionOptionsOutput + displayOptionsOutput + errorString + "0 All1{0}1 All2{0}", Environment.NewLine);
             RunTest(testInputs, expected);
         }
 
@@ -62,7 +64,7 @@ namespace TaskListTests.UserInterfaceTests
         public void GetUserSelectionFromEnumShouldRespectValidString()
         {
             List<string> testInputs = new List<string> { "Display", "incomplete" };
-            string expected = string.Format(displayOptionsOutput + "0 Incomplete1{0}1 Incomplete2{0}", Environment.NewLine);
+            string expected = string.Format(actionOptionsOutput + displayOptionsOutput + "0 Incomplete1{0}1 Incomplete2{0}", Environment.NewLine);
             RunTest(testInputs, expected);
         }
 
@@ -80,8 +82,8 @@ namespace TaskListTests.UserInterfaceTests
         {
             TestInputParser testParser = new TestInputParser(testInputs);
             input = testParser;
-            testParser.GetNextAction();
-            PerformAction(testParser);
+            UserActions action = DetermineAction();
+            PerformAction(action);
         }
     }
 }

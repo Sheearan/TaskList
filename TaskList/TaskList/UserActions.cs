@@ -2,12 +2,12 @@
 {
     public enum UserActions
     {
-        Complete,
+        Help,
         Create,
         Display,
-        Exit,
+        Complete,
         Load,
         Save,
-        Unknown
+        Exit
     }
 }

@@ -4,105 +4,14 @@ namespace TaskManager.UserInterface
 {
     public class UserInputParser
     {
-        private string _userInput { get; set; }
-        private string _userArguments { get; set; }
-        private UserActions? _userAction { get; set; }
-
-        public UserActions Action
+        internal T GetUserSelectionFromEnum<T>(T defaultSelection, bool showOptions)
         {
-            get
+            if (showOptions)
             {
-                if (!_userAction.HasValue)
+                foreach (var value in Enum.GetValues(typeof(T)))
                 {
-                    ParseInput();
+                    Console.WriteLine(string.Format("{0} - {1}", (int)value, (T)value));
                 }
-
-                return _userAction.Value;
-            }
-        }
-
-        public void GetNextAction()
-        {
-            _userArguments = null;
-            _userAction = null;
-            _userInput = GetNextInputLine();
-        }
-
-        public string Arguments
-        {
-            get
-            {
-                if (_userArguments == null)
-                {
-                    ParseInput();
-                }
-
-                return _userArguments;
-            }
-        }
-
-        protected void ParseInput()
-        {
-            if (string.IsNullOrWhiteSpace(_userInput))
-            {
-                _userAction = UserActions.Unknown;
-                return;
-            }
-
-            int firstSpace = findFirstSpace();
-            parseActionType(firstSpace);
-            parseArguments(firstSpace);
-        }
-
-        private int findFirstSpace()
-        {
-            _userInput = _userInput.Trim();
-            return _userInput.IndexOf(" ");
-        }
-
-        private void parseActionType(int indexOfFirstSpace)
-        {
-            string actionType;
-            if (indexOfFirstSpace == -1)
-            {
-                actionType = _userInput;
-            }
-            else
-            {
-                actionType = _userInput.Substring(0, indexOfFirstSpace);
-            }
-
-            switch (actionType)
-            {
-                case "Complete":
-                    _userAction = UserActions.Complete;
-                    return;
-                case "Create":
-                    _userAction = UserActions.Create;
-                    return;
-                case "Display":
-                    _userAction = UserActions.Display;
-                    return;
-                case "Exit":
-                    _userAction = UserActions.Exit;
-                    return;
-                case "Load":
-                    _userAction = UserActions.Load;
-                    return;
-                case "Save":
-                    _userAction = UserActions.Save;
-                    return;
-                default:
-                    _userAction = UserActions.Unknown;
-                    return;
-            }
-        }
-
-        internal T GetUserSelectionFromEnum<T>(T defaultSelection)
-        {
-            foreach (var value in Enum.GetValues(typeof(T)))
-            {
-                Console.WriteLine(string.Format("{0} - {1}", (int) value, (T) value));
             }
 
             string userSelection = GetNextInputLine();
@@ -125,18 +34,6 @@ namespace TaskManager.UserInterface
                 return defaultSelection;
             }
         } 
-
-        private void parseArguments(int indexOfFirstSpace)
-        {
-            if (indexOfFirstSpace == -1)
-            {
-                _userArguments = string.Empty;
-            }
-            else
-            {
-                _userArguments = _userInput.Substring(indexOfFirstSpace).Trim(' ');
-            }
-        }
 
         protected virtual string GetNextInputLine()
         {

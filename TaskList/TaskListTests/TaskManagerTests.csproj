@@ -59,7 +59,6 @@
     <Compile Include="DataStorageTests\TestStorage.cs" />
     <Compile Include="UserInterfaceTests\CommandLineInterfaceTest.cs" />
     <Compile Include="UserInterfaceTests\TestInputParser.cs" />
-    <Compile Include="UserInterfaceTests\UserInputTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaskList\TaskManager.csproj">
