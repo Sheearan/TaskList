@@ -6,6 +6,13 @@ namespace TaskManager.UserInterface
     {
         internal T GetUserSelectionFromEnum<T>(T defaultSelection, bool showOptions)
         {
+            DisplayOptions<T>(showOptions);
+            string userSelection = GetNextInputLine();
+            return ParseUserSelection(defaultSelection, userSelection);
+        }
+
+        private static void DisplayOptions<T>(bool showOptions)
+        {
             if (showOptions)
             {
                 foreach (var value in Enum.GetValues(typeof(T)))
@@ -13,8 +20,10 @@ namespace TaskManager.UserInterface
                     Console.WriteLine(string.Format("{0} - {1}", (int)value, (T)value));
                 }
             }
+        }
 
-            string userSelection = GetNextInputLine();
+        private static T ParseUserSelection<T>(T defaultSelection, string userSelection)
+        {
             try
             {
                 T enumValue = (T)Enum.Parse(typeof(T), userSelection, true);
@@ -24,16 +33,20 @@ namespace TaskManager.UserInterface
                 }
                 else
                 {
-                    Console.WriteLine(string.Format("Invalid input - defaulting to {0}", defaultSelection));
-                    return defaultSelection;
+                    return HandleInvalidInput(defaultSelection);
                 }
             }
             catch (ArgumentException)
             {
-                Console.WriteLine(string.Format("Invalid input - defaulting to {0}", defaultSelection));
-                return defaultSelection;
+                return HandleInvalidInput(defaultSelection);
             }
-        } 
+        }
+
+        private static T HandleInvalidInput<T>(T defaultSelection)
+        {
+            Console.WriteLine(string.Format("Invalid input - defaulting to {0}", defaultSelection));
+            return defaultSelection;
+        }
 
         protected virtual string GetNextInputLine()
         {
