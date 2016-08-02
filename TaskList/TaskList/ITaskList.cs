@@ -5,5 +5,6 @@ namespace TaskManager
     public interface ITaskList
     {
         List<Task> GetTasksToDisplay(TaskDisplayFilter filter);
+        Task AddTask(string taskName);
     }
 }

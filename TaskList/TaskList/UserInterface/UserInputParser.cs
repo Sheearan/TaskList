@@ -6,12 +6,17 @@ namespace TaskManager.UserInterface
     {
         internal T GetUserSelectionFromEnum<T>(T defaultSelection, bool showOptions)
         {
-            DisplayOptions<T>(showOptions);
+            PresentOptions<T>(showOptions);
             string userSelection = GetNextInputLine();
             return ParseUserSelection(defaultSelection, userSelection);
         }
 
-        private static void DisplayOptions<T>(bool showOptions)
+        internal string GetString()
+        {
+            return GetNextInputLine();
+        }
+
+        private static void PresentOptions<T>(bool showOptions)
         {
             if (showOptions)
             {

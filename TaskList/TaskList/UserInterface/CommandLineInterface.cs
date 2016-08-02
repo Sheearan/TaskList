@@ -22,29 +22,45 @@ namespace TaskManager.UserInterface
             //            file.Save(null, list);
         }
 
+        protected UserActions DetermineAction()
+        {
+            Console.WriteLine("Please select which action you'd like to take by entering the corresponding number:");
+            UserActions selectedAction = input.GetUserSelectionFromEnum<UserActions>(UserActions.Help, userNeedsDirections);
+            userNeedsDirections = false;
+            return selectedAction;
+        }
+
         protected void PerformAction(UserActions action)
         {
             switch (action)
             {
-                case UserActions.Complete:
-                    //                    list.CompleteTask(input.Arguments);
+                case UserActions.Help:
+                    userNeedsDirections = true;
                     break;
                 case UserActions.Create:
-                    //                   list.AddTask(input.Arguments);
+                    CreateTask();
                     break;
                 case UserActions.Display:
                     Display();
+                    break;
+                case UserActions.Complete:
+                    //list.CompleteTask(input.Arguments);
                     break;
                 case UserActions.Load:
                     //list = file.Load(input.Arguments);
                     break;
                 case UserActions.Save:
-                    //                    file.Save(input.Arguments, list);
-                    break;
-                case UserActions.Help:
-                    userNeedsDirections = true;
+                    //file.Save(input.Arguments, list);
                     break;
             }
+        }
+
+        private void CreateTask()
+        {
+            Console.WriteLine("Please enter the name of your new task:");
+            string taskName = input.GetString();
+            Task newTask = list.AddTask(taskName);
+            Console.WriteLine(string.Format("New task created: {0} {1}", newTask.TaskId, newTask.Title));
         }
 
         private void Display()
@@ -55,14 +71,6 @@ namespace TaskManager.UserInterface
             {
                 Console.WriteLine(string.Format("{0} {1}", task.TaskId, task.Title));
             }
-        }
-
-        protected UserActions DetermineAction()
-        {
-            Console.WriteLine("Please select which action you'd like to take by entering the corresponding number:");
-            UserActions selectedAction = input.GetUserSelectionFromEnum<UserActions>(UserActions.Help, userNeedsDirections);
-            userNeedsDirections = false;
-            return selectedAction;
         }
 
         private TaskDisplayFilter DetermineDisplayFilter()
