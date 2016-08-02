@@ -42,7 +42,7 @@ namespace TaskListTests
         {
             TaskList tasks = new TaskList();
             SetupTaskList(tasks);
-            List<Task> actual = tasks.GetTasksToDisplay(TaskFilter.All);
+            List<Task> actual = tasks.GetTasksToDisplay(TaskDisplayFilter.All);
 
             Assert.AreEqual(2, actual.Count, string.Format("There should be 2 tasks to display, not {0}", actual.Count));
         }
@@ -52,7 +52,7 @@ namespace TaskListTests
         {
             TaskList tasks = new TaskList();
             SetupTaskList(tasks);
-            List<Task> actual = tasks.GetTasksToDisplay(TaskFilter.Incomplete);
+            List<Task> actual = tasks.GetTasksToDisplay(TaskDisplayFilter.Incomplete);
 
             Assert.AreEqual(1, actual.Count, string.Format("There should be 1 task to display, not {0}", actual.Count));
         }

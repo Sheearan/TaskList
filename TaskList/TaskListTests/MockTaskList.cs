@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaskManager;
 
 namespace TaskListTests
 {
     class MockTaskList : ITaskList
     {
-        public List<Task> GetTasksToDisplay(TaskFilter filter)
+        public List<Task> GetTasksToDisplay(TaskDisplayFilter filter)
         {
             List<Task> tasksToDisplay = new List<Task>();
             tasksToDisplay.Add(new Task(string.Format("{0}1", filter.ToString()), 0));

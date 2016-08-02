@@ -29,7 +29,7 @@ namespace TaskListTests.UserInterfaceTests
         [TestMethod]
         public void DisplayShouldDisplayTasks()
         {
-            List<string> testInputs = new List<string> { "Display", ((int)TaskFilter.All).ToString() };
+            List<string> testInputs = new List<string> { "Display", ((int)TaskDisplayFilter.All).ToString() };
             string expected = string.Format(actionOptionsOutput + displayOptionsOutput + "0 All1{0}1 All2{0}", Environment.NewLine);
             RunTest(testInputs, expected);
         }
@@ -37,7 +37,7 @@ namespace TaskListTests.UserInterfaceTests
         [TestMethod]
         public void DisplayShouldNotDisplayCompletedTasks()
         {
-            List<string> testInputs = new List<string> { "Display", ((int)TaskFilter.Incomplete).ToString() };
+            List<string> testInputs = new List<string> { "Display", ((int)TaskDisplayFilter.Incomplete).ToString() };
             string expected = string.Format(actionOptionsOutput + displayOptionsOutput + "0 Incomplete1{0}1 Incomplete2{0}", Environment.NewLine);
             RunTest(testInputs, expected); 
         }

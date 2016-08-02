@@ -49,7 +49,7 @@ namespace TaskManager.UserInterface
 
         private void Display()
         {
-            TaskFilter filter = DetermineDisplayFilter();
+            TaskDisplayFilter filter = DetermineDisplayFilter();
             List<Task> tasksToDisplay = list.GetTasksToDisplay(filter);
             foreach (Task task in tasksToDisplay)
             {
@@ -65,10 +65,10 @@ namespace TaskManager.UserInterface
             return selectedAction;
         }
 
-        private TaskFilter DetermineDisplayFilter()
+        private TaskDisplayFilter DetermineDisplayFilter()
         {
             Console.WriteLine("Please select which tasks you'd like to display by entering the corresponding number:");
-            return input.GetUserSelectionFromEnum<TaskFilter>(TaskFilter.All, true);
+            return input.GetUserSelectionFromEnum<TaskDisplayFilter>(TaskDisplayFilter.All, true);
         }
     }
 }

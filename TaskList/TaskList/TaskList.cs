@@ -77,11 +77,11 @@ namespace TaskManager
             return desiredTask;
         }
 
-        public List<Task> GetTasksToDisplay(TaskFilter filter)
+        public List<Task> GetTasksToDisplay(TaskDisplayFilter filter)
         {
             switch (filter)
             {
-                case TaskFilter.Incomplete:
+                case TaskDisplayFilter.Incomplete:
                     List<Task> incompleteTasks = new List<Task>();
                     foreach (Task t in _taskList)
                     {

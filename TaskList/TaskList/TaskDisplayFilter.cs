@@ -1,6 +1,6 @@
 ﻿namespace TaskManager
 {
-    public enum TaskFilter
+    public enum TaskDisplayFilter
     {
         Incomplete,
         All
