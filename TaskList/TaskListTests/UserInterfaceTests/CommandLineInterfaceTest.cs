@@ -13,6 +13,7 @@ namespace TaskListTests.UserInterfaceTests
         const string actionOptionsOutput = "Please select which action you'd like to take by entering the corresponding number:{0}0 - Help{0}1 - Create{0}2 - Display{0}3 - Complete{0}4 - Load{0}5 - Save{0}6 - Exit{0}";
         const string createOptionsOutput = "Please enter the name of your new task:{0}";
         const string displayOptionsOutput = "Please select which tasks you'd like to display by entering the corresponding number:{0}0 - Incomplete{0}1 - All{0}";
+        const string completeOptionsOutput = "Please enter the ID of the task to complete:{0}";
 
         public CommandLineInterfaceTest()
         {
@@ -63,7 +64,7 @@ namespace TaskListTests.UserInterfaceTests
         }
 
         [TestMethod]
-        public void DisplayShouldDisplayTasks()
+        public void DisplayAllShouldDisplayTasks()
         {
             List<string> testInputs = new List<string> { "Display", ((int)TaskDisplayFilter.All).ToString() };
             string expected = string.Format(actionOptionsOutput + displayOptionsOutput + "0 All1{0}1 All2{0}", Environment.NewLine);
@@ -71,11 +72,28 @@ namespace TaskListTests.UserInterfaceTests
         }
 
         [TestMethod]
-        public void DisplayShouldNotDisplayCompletedTasks()
+        public void DisplayIncompleteShouldNotDisplayCompletedTasks()
         {
             List<string> testInputs = new List<string> { "Display", ((int)TaskDisplayFilter.Incomplete).ToString() };
             string expected = string.Format(actionOptionsOutput + displayOptionsOutput + "0 Incomplete1{0}1 Incomplete2{0}", Environment.NewLine);
             RunTest(testInputs, expected); 
+        }
+
+        [TestMethod]
+        public void CompleteTaskShouldShowCompletedTask()
+        {
+            List<string> testInputs = new List<string> { "Complete", "0" };
+            string expected = string.Format(actionOptionsOutput + completeOptionsOutput + "Task Completed: 0 TestCompletion{0}", Environment.NewLine);
+            RunTest(testInputs, expected);
+        }
+
+        [TestMethod]
+        public void CompleteTaskShouldDisplayErrorIfIdIsNotANumber()
+        {
+            List<string> testInputs = new List<string> { "Complete", "This is a string" };
+            string errorString = "This is a string is not a valid task ID. Task IDs must be positive integers.{0}";
+            string expected = string.Format(actionOptionsOutput + completeOptionsOutput + errorString, Environment.NewLine);
+            RunTest(testInputs, expected);
         }
 
         private void RunTest(List<string> input, string expectedOutput)

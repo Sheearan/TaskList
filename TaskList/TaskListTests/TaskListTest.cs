@@ -65,24 +65,9 @@ namespace TaskListTests
             Task newTask = tasks.AddTask("Task to complete");
             Assert.IsNull(newTask.CompletionDate, "Tasks should not be completed when they are first added.");
 
-            tasks.CompleteTask(newTask.TaskId.ToString());
+            tasks.CompleteTask(newTask.TaskId);
             Assert.IsNotNull(newTask.CompletionDate, "Completing a task needs to add a completion date.");
             Assert.AreEqual<DateTime>(DateTime.Today, newTask.CompletionDate.Value, "Completion date should be today.");
-        }
-
-        [TestMethod]
-        public void CompleteTaskShouldDisplayErrorIfArgumentIsNotANumber()
-        {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-
-                TaskList tasks = new TaskList();
-                tasks.CompleteTask("This is a string");
-
-                string expected = string.Format("This is a string is not a valid task ID. Task IDs must be positive integers.{0}", Environment.NewLine);
-                Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
-            }
         }
 
         [TestMethod]
@@ -93,7 +78,7 @@ namespace TaskListTests
                 Console.SetOut(sw);
 
                 TaskList tasks = new TaskList();
-                tasks.CompleteTask("42");
+                tasks.CompleteTask(42);
 
                 string expected = string.Format("Could not find task 42.{0}", Environment.NewLine);
                 Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
@@ -104,7 +89,7 @@ namespace TaskListTests
         {
             Task firstTask = tasks.AddTask("New Task");
             Task secondTask = tasks.AddTask("Another Task");
-            tasks.CompleteTask(firstTask.TaskId.ToString());
+            tasks.CompleteTask(firstTask.TaskId);
         }
     }
 }

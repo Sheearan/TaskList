@@ -44,7 +44,7 @@ namespace TaskManager.UserInterface
                     Display();
                     break;
                 case UserActions.Complete:
-                    //list.CompleteTask(input.Arguments);
+                    CompleteTask();
                     break;
                 case UserActions.Load:
                     //list = file.Load(input.Arguments);
@@ -77,6 +77,20 @@ namespace TaskManager.UserInterface
         {
             Console.WriteLine("Please select which tasks you'd like to display by entering the corresponding number:");
             return input.GetUserSelectionFromEnum<TaskDisplayFilter>(TaskDisplayFilter.All, true);
+        }
+
+        private void CompleteTask()
+        {
+            Console.WriteLine("Please enter the ID of the task to complete:");
+            int taskId = input.GetInt();
+            if (taskId < 0)
+            {
+                return;
+            }
+
+            Task completedTask = list.CompleteTask(taskId);
+            Console.WriteLine(string.Format("Task Completed: {0} {1}", completedTask.TaskId, completedTask.Title));
+
         }
     }
 }

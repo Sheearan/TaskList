@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaskManager;
 
 namespace TaskListTests
@@ -17,6 +16,11 @@ namespace TaskListTests
             tasksToDisplay.Add(new Task(string.Format("{0}1", filter.ToString()), 0));
             tasksToDisplay.Add(new Task(string.Format("{0}2", filter.ToString()), 1));
             return tasksToDisplay;
+        }
+
+        public Task CompleteTask(int taskId)
+        {
+            return new Task("TestCompletion", taskId);
         }
     }
 }

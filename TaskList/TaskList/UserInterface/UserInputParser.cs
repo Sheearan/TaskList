@@ -16,6 +16,19 @@ namespace TaskManager.UserInterface
             return GetNextInputLine();
         }
 
+        internal int GetInt()
+        {
+            string input = GetNextInputLine();
+            int taskId;
+            if (int.TryParse(input, out taskId))
+            {
+                return taskId;
+            }
+            Console.WriteLine(string.Format("{0} is not a valid task ID. Task IDs must be positive integers.", input));
+            return -1;
+        }
+
+
         private static void PresentOptions<T>(bool showOptions)
         {
             if (showOptions)

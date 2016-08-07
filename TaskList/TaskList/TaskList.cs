@@ -35,44 +35,8 @@ namespace TaskManager
             return taskToAdd;
         }
 
-        public void Display()
+        private Task FindTaskById(int taskId)
         {
-            foreach (Task task in _taskList)
-            {
-                if (task.CompletionDate == null)
-                {
-                    Console.WriteLine(string.Format("{0} {1}", task.TaskId, task.Title));
-                }
-            }
-        }
-
-        public void CompleteTask(string taskIdAsString)
-        {
-            try
-            {
-                Task taskToComplete = FindTaskById(taskIdAsString);
-                if (taskToComplete == null)
-                {
-                    Console.WriteLine(string.Format("Could not find task {0}.", taskIdAsString));
-                    return;
-                }
-
-                taskToComplete.CompletionDate = DateTime.Today;
-            }
-            catch
-            {
-                Console.WriteLine(string.Format("{0} is not a valid task ID. Task IDs must be positive integers.", taskIdAsString));
-            }
-        }
-
-        private Task FindTaskById(string taskIdAsString)
-        {
-            int taskId;
-            if (!int.TryParse(taskIdAsString, out taskId))
-            {
-                throw new ArgumentException();
-            }
-
             Task desiredTask = _taskList.Find(task => task.TaskId == taskId);
             return desiredTask;
         }
@@ -94,6 +58,19 @@ namespace TaskManager
                 default:
                     return _taskList;
             }
+        }
+
+        public Task CompleteTask(int taskId)
+        {
+            Task taskToComplete = FindTaskById(taskId);
+            if (taskToComplete == null)
+            {
+                Console.WriteLine(string.Format("Could not find task {0}.", taskId));
+                return new Task("", taskId);
+            }
+
+            taskToComplete.CompletionDate = DateTime.Today;
+            return taskToComplete;
         }
     }
 }
