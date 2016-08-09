@@ -65,8 +65,7 @@ namespace TaskManager
             Task taskToComplete = FindTaskById(taskId);
             if (taskToComplete == null)
             {
-                Console.WriteLine(string.Format("Could not find task {0}.", taskId));
-                return new Task("", taskId);
+                return null;
             }
 
             taskToComplete.CompletionDate = DateTime.Today;

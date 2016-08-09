@@ -89,8 +89,14 @@ namespace TaskManager.UserInterface
             }
 
             Task completedTask = list.CompleteTask(taskId);
-            Console.WriteLine(string.Format("Task Completed: {0} {1}", completedTask.TaskId, completedTask.Title));
-
+            if (completedTask != null)
+            {
+                Console.WriteLine(string.Format("Task Completed: {0} {1}", completedTask.TaskId, completedTask.Title));
+            }
+            else
+            {
+                Console.WriteLine(string.Format("Task ID {0} was not found.", taskId));
+            }
         }
     }
 }

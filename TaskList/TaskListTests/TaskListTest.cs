@@ -71,18 +71,11 @@ namespace TaskListTests
         }
 
         [TestMethod]
-        public void CompleteTaskShouldDisplayErrorIfTaskIdIsNonexistent()
+        public void CompleteTaskShouldReturnNullIfTaskIdIsNonexistent()
         {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-
                 TaskList tasks = new TaskList();
-                tasks.CompleteTask(42);
-
-                string expected = string.Format("Could not find task 42.{0}", Environment.NewLine);
-                Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
-            }
+                Task returnedTask = tasks.CompleteTask(42);
+                Assert.IsNull(returnedTask, string.Format("Returned task should be null, not {0}", returnedTask));
         }
 
         private static void SetupTaskList(TaskList tasks)

@@ -20,6 +20,11 @@ namespace TaskListTests
 
         public Task CompleteTask(int taskId)
         {
+            if (taskId == 404)
+            {
+                return null;
+            }
+
             return new Task("TestCompletion", taskId);
         }
     }

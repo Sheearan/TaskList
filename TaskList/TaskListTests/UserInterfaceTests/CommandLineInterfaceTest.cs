@@ -96,6 +96,16 @@ namespace TaskListTests.UserInterfaceTests
             RunTest(testInputs, expected);
         }
 
+        [TestMethod]
+        public void CompleteTaskShouldDisplayErrorIfTaskIdIsNonexistent()
+        {
+            List<string> testInputs = new List<string> { "Complete", "404" };
+            string errorString = "Task ID 404 was not found.{0}";
+            string expected = string.Format(actionOptionsOutput + completeOptionsOutput + errorString, Environment.NewLine);
+            RunTest(testInputs, expected);
+        }
+
+
         private void RunTest(List<string> input, string expectedOutput)
         {
             using (StringWriter sw = new StringWriter())
