@@ -20,7 +20,7 @@ namespace TaskManager.UserInterface
                 PerformAction(action);
             } while (!(action == UserActions.Exit));
 
-            //file.Save(null, list);
+            file.Save(list, input);
         }
 
         protected UserActions DetermineAction()
