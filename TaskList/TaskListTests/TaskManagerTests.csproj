@@ -52,12 +52,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DataStorageTests\TaskListFileTest.cs" />
     <Compile Include="MockTaskList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskListTest.cs" />
     <Compile Include="DataStorageTests\TestStorage.cs" />
     <Compile Include="UserInterfaceTests\CommandLineInterfaceTest.cs" />
+    <Compile Include="UserInterfaceTests\TaskListFileTest.cs" />
     <Compile Include="UserInterfaceTests\TestInputParser.cs" />
   </ItemGroup>
   <ItemGroup>

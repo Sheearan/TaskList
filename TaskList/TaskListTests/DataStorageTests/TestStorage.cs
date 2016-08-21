@@ -9,7 +9,7 @@ namespace TaskManagerTests.DataStorageTests
         public string LoadedFile { get; internal set; }
         public string SavedFile { get; private set; }
 
-        public void Save(string fileName, TaskList list)
+        public void Save(string fileName, ITaskList list)
         {
             if (string.Equals(fileName, "Exception"))
             {

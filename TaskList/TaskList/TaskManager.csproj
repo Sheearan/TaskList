@@ -50,10 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TaskList.cs" />
-    <Compile Include="DataStorage\TaskListFile.cs" />
     <Compile Include="UserActions.cs" />
     <Compile Include="UserInterface\CommandLineInterface.cs" />
     <Compile Include="ITaskList.cs" />
+    <Compile Include="UserInterface\TaskListFile.cs" />
     <Compile Include="UserInterface\UserInputParser.cs" />
   </ItemGroup>
   <ItemGroup>

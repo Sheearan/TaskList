@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using TaskManager.UserInterface;
 
 namespace TaskManager.DataStorage
 {
@@ -18,25 +19,21 @@ namespace TaskManager.DataStorage
             _storage = storageMechanism;
         }
 
-        public void Save(string fileName, TaskList list)
+        public void Save(ITaskList list, UserInputParser input)
         {
-            string saveFileName = fileName;
+            string saveFileName = _fileName;
 
-            if (string.IsNullOrWhiteSpace(fileName))
+            while (string.IsNullOrWhiteSpace(saveFileName))
             {
-                if (string.IsNullOrWhiteSpace(_fileName))
-                {
-                    Console.WriteLine("No file path specified.");
-                    return;
-                }
-
-                saveFileName = _fileName;
+                Console.WriteLine("Please enter the filename that you would like to save to:");
+                saveFileName = input.GetString();
             }
 
             try
             {
                 _storage.Save(saveFileName, list);
                 _fileName = saveFileName;
+                Console.WriteLine(string.Format("Task List saved to {0}.", saveFileName));
             }
             catch (Exception e)
             {

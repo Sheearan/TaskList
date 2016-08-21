@@ -4,6 +4,8 @@ using System.IO;
 using TaskManager.UserInterface;
 using System.Collections.Generic;
 using TaskManager;
+using TaskManagerTests.DataStorageTests;
+using TaskManager.DataStorage;
 
 namespace TaskListTests.UserInterfaceTests
 {
@@ -14,10 +16,12 @@ namespace TaskListTests.UserInterfaceTests
         const string createOptionsOutput = "Please enter the name of your new task:{0}";
         const string displayOptionsOutput = "Please select which tasks you'd like to display by entering the corresponding number:{0}0 - Incomplete{0}1 - All{0}";
         const string completeOptionsOutput = "Please enter the ID of the task to complete:{0}";
+        const string fileNameSavePrompt = "Please enter the filename that you would like to save to:{0}";
 
         public CommandLineInterfaceTest()
         {
             list = new MockTaskList();
+            file = new TaskListFile(new TestStorage());
         }
 
         [TestMethod]
@@ -105,6 +109,30 @@ namespace TaskListTests.UserInterfaceTests
             RunTest(testInputs, expected);
         }
 
+        [TestMethod]
+        public void FirstSaveShouldPromptForFile()
+        {
+            List<string> testInputs = new List<string> { "Save", "FakeFileName" };
+            string expected = string.Format(actionOptionsOutput + fileNameSavePrompt + "Task List saved to FakeFileName.{0}", Environment.NewLine);
+            RunTest(testInputs, expected);
+        }
+
+        [TestMethod]
+        public void InitialSaveWithEmptyFilePathShouldContinuePrompting()
+        {
+            List<string> testInputs = new List<string> { "Save", string.Empty, "FakeFileName" };
+            string expected = string.Format(actionOptionsOutput + fileNameSavePrompt + fileNameSavePrompt + "Task List saved to FakeFileName.{0}", Environment.NewLine);
+            RunTest(testInputs, expected);
+        }
+
+        [TestMethod]
+        public void InvalidSaveShouldNotifyUser()
+        {
+            List<string> testInputs = new List<string> { "Save", "Exception"};
+            string errorString = "Unable to save task data. Value does not fall within the expected range.{0}";
+            string expected = string.Format(actionOptionsOutput + fileNameSavePrompt + errorString, Environment.NewLine);
+            RunTest(testInputs, expected);
+        }
 
         private void RunTest(List<string> input, string expectedOutput)
         {

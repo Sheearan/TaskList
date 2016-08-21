@@ -19,7 +19,8 @@ namespace TaskManager.UserInterface
                 action = DetermineAction();
                 PerformAction(action);
             } while (!(action == UserActions.Exit));
-            //            file.Save(null, list);
+
+            //file.Save(null, list);
         }
 
         protected UserActions DetermineAction()
@@ -50,7 +51,7 @@ namespace TaskManager.UserInterface
                     //list = file.Load(input.Arguments);
                     break;
                 case UserActions.Save:
-                    //file.Save(input.Arguments, list);
+                    file.Save(list, input);
                     break;
             }
         }

@@ -5,7 +5,7 @@ namespace TaskManager.DataStorage
 {
     internal class FileSystem : IStorage
     {
-        public void Save(string fileName, TaskList list)
+        public void Save(string fileName, ITaskList list)
         {
             FileStream writerFileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
             BinaryFormatter formatter = new BinaryFormatter();

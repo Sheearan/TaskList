@@ -3,6 +3,8 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TaskManager;
 using TaskManager.DataStorage;
+using TaskListTests.UserInterfaceTests;
+using System.Collections.Generic;
 
 namespace TaskManagerTests.DataStorageTests
 {
@@ -15,83 +17,22 @@ namespace TaskManagerTests.DataStorageTests
             TestStorage saveSensor = new TestStorage();
             TaskListFile file = new TaskListFile(saveSensor);
 
-            file.Save("TestFileName", new TaskList());
+            file.Save(new TaskList(), new TestInputParser(new List<string> { "TestFileName" }));
 
             Assert.AreEqual("TestFileName", saveSensor.SavedFile, string.Format("Saved file name should be TestFileName, not {0}", saveSensor.SavedFile));
         }
 
         [TestMethod]
-        public void InitialSaveWithNullFilePathShouldShowUnableToSaveMessage()
-        {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-
-                TaskListFile file = new TaskListFile(new TestStorage());
-
-                file.Save(null, new TaskList());
-
-                string expected = string.Format("No file path specified.{0}", Environment.NewLine);
-                Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
-            }
-        }
-
-        [TestMethod]
-        public void InitialSaveWithEmptyFilePathShouldShowUnableToSaveMessage()
-        {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-
-                TaskListFile file = new TaskListFile(new TestStorage());
-
-                file.Save(string.Empty, new TaskList());
-
-                string expected = string.Format("No file path specified.{0}", Environment.NewLine);
-                Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
-            }
-        }
-
-        [TestMethod]
-        public void SecondSaveShouldDefaultToSameFilePathAsFirstWithNullString()
+        public void SecondSaveShouldDefaultToSameFilePathAsFirst()
         {
             TestStorage saveSensor = new TestStorage();
             TaskListFile file = new TaskListFile(saveSensor);
 
-            file.Save("TestFileName", new TaskList());
+            file.Save(new TaskList(), new TestInputParser(new List<string> { "TestFileName" }));
 
             saveSensor.Clear();
-            file.Save(null, new TaskList());
+            file.Save(new TaskList(), new TestInputParser(new List<string> { }));
             Assert.AreEqual("TestFileName", saveSensor.SavedFile, string.Format("Saved file name should be TestFileName, not {0}", saveSensor.SavedFile));
-        }
-
-        [TestMethod]
-        public void SecondSaveShouldDefaultToSameFilePathAsFirstWithEmptyString()
-        {
-            TestStorage saveSensor = new TestStorage();
-            TaskListFile file = new TaskListFile(saveSensor);
-
-            file.Save("TestFileName", new TaskList());
-
-            saveSensor.Clear();
-            file.Save(string.Empty, new TaskList());
-            Assert.AreEqual("TestFileName", saveSensor.SavedFile, string.Format("Saved file name should be TestFileName, not {0}", saveSensor.SavedFile));
-        }
-
-        [TestMethod]
-        public void InvalidSaveShouldNotifyUser()
-        {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-
-                TaskListFile file = new TaskListFile(new TestStorage());
-
-                file.Save("Exception", new TaskList());
-
-                string expected = string.Format("Unable to save task data. Value does not fall within the expected range.{0}", Environment.NewLine);
-                Assert.AreEqual<string>(expected, sw.ToString(), string.Format("Expected output is {0}, not {1}", expected, sw.ToString()));
-            }
         }
 
         [TestMethod]
@@ -102,10 +43,10 @@ namespace TaskManagerTests.DataStorageTests
 
             file.Load("LoadTestFile");
 
-            file.Save(null, new TaskList());
+            file.Save(new TaskList(), new TestInputParser(new List<string> { })); //null
 
             saveSensor.Clear();
-            file.Save(string.Empty, new TaskList());
+            file.Save(new TaskList(), new TestInputParser(new List<string> { })); //string.Empty
             Assert.AreEqual("LoadTestFile", saveSensor.SavedFile, string.Format("Saved file name should be LoadTestFile, not {0}", saveSensor.SavedFile));
         }
 
